@@ -8,7 +8,7 @@ import (
 
 func (h *Handler) RegisterRoutes(r *chi.Mux) http.Handler {
 	r.Group(func(r chi.Router) {
-		r.Post("/user/login", h.Login())
+		r.Post("/api/user/login", h.Login())
 	})
 
 	return r

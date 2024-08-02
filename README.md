@@ -20,7 +20,6 @@ The purpose of this boilerplate is to provide a starting point for a Go backend 
 |       └── main.go
 ├── config -> configuration files
 │   ├── config.go
-│   └── db.go
 ├── docs -> documentation
 ├── entity -> entity layer
 │   ├── user.go
@@ -38,7 +37,9 @@ The purpose of this boilerplate is to provide a starting point for a Go backend 
 │   │   ├── cors.go
 │   │   ├── logger.go
 │   │   ├── recover.go
+├── internal -> internal package
+|   ├── db
 ├── migration -> migration files
-├── util -> utility layer
+├── role -> domain layer
 
 

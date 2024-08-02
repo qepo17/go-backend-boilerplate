@@ -11,11 +11,12 @@ import (
 	"project/config"
 	"project/http/handler/admin"
 	"project/http/handler/user"
-	"project/http/middleware"
+	"project/internal/db"
 	"syscall"
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/rs/zerolog/log"
 )
 
@@ -25,7 +26,7 @@ func main() {
 		log.Fatal().Err(err).Msg("failed to get config")
 	}
 
-	db, err := cfg.NewDB()
+	db, err := db.New(cfg.DBHost, cfg.DBPort, cfg.DBUser, cfg.DBPassword, cfg.DBName)
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to connect to database")
 	}
@@ -33,7 +34,13 @@ func main() {
 
 	r := chi.NewRouter()
 
-	r.Use(middleware.Cors().Handler)
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{""},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+		MaxAge:           300, // Maximum value not ignored by any of major browsers
+	}))
 
 	r.Get("/_health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
