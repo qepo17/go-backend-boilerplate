@@ -13,7 +13,7 @@ The purpose of this boilerplate is to provide a starting point for a Go backend 
 ├── auth -> domain layer
 │   ├── auth.go
 │   └── auth_test.go
-├── bin -> binary files
+├── cmd -> main files
 │   └── web -> web binary, for web server
 |       └── main.go 
 │   └── worker -> worker binary, for background job
