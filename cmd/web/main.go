@@ -7,11 +7,12 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"project/auth"
 	"project/config"
 	"project/http/handler/admin"
 	"project/http/handler/user"
 	"project/internal/db"
+	"project/internal/repository"
+	userSvc "project/user"
 	"syscall"
 	"time"
 
@@ -46,12 +47,17 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	authService, err := auth.NewDomain(db)
+	userRepository, err := repository.NewUserRepository(db)
+	if err != nil {
+		log.Fatal().Err(err).Msg("failed to create user repository")
+	}
+
+	userService, err := userSvc.NewDomain(db, userRepository)
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to create auth service")
 	}
 
-	adminHandler := admin.NewHandler(authService)
+	adminHandler := admin.NewHandler(userService)
 	userHandler := user.NewHandler()
 
 	adminHandler.RegisterRoutes(r)

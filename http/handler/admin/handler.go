@@ -1,11 +1,13 @@
 package admin
 
-import "project/auth"
+import (
+	"project/user"
+)
 
 type Handler struct {
-	authService *auth.Domain
+	userService *user.Domain
 }
 
-func NewHandler(authService *auth.Domain) *Handler {
+func NewHandler(authService *user.Domain) *Handler {
 	return &Handler{}
 }

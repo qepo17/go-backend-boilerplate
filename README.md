@@ -10,9 +10,6 @@ The purpose of this boilerplate is to provide a starting point for a Go backend 
 .
 ├── Dockerfile
 ├── README.md
-├── auth -> domain layer
-│   ├── auth.go
-│   └── auth_test.go
 ├── cmd -> main files
 │   └── web -> web binary, for web server
 |       └── main.go 
@@ -39,7 +36,11 @@ The purpose of this boilerplate is to provide a starting point for a Go backend 
 │   │   ├── recover.go
 ├── internal -> internal package
 |   ├── db
+|   ├── repository -> repository package. put all repository here, so it wouldn't cause circular dependency later
 ├── migration -> migration files
 ├── role -> domain layer
+├── user -> domain layer
+│   ├── user.go -> in domain still expose DB to use transaction in service level, when needed
+│   └── user_test.go
 
 
